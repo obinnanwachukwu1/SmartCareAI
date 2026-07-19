@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { google } from '@ai-sdk/google';
+import { google, type GoogleLanguageModelOptions } from '@ai-sdk/google';
 import { generateObject, generateText } from 'ai';
 import { z } from 'zod';
 import { Client } from "@gradio/client";
@@ -50,14 +50,17 @@ export async function POST(req: NextRequest) {
       }).strict();
 
     // Create the generative model with a system instruction including the JSON schema
-    const model = google('gemini-2.0-flash', {
-        structuredOutputs: false,
-    });
+    const model = google('gemini-2.0-flash');
 
     // Generate text using the model. The user message only contains the file.
     const result = await generateObject({
       model,
       schema: responseSchema,
+      providerOptions: {
+        google: {
+          structuredOutputs: false,
+        } satisfies GoogleLanguageModelOptions,
+      },
       system: `Parse the uploaded document with the JSON schema provided.
 
 Group results that are under the same test, for instance:
@@ -83,7 +86,7 @@ Group results that are under the same test, for instance:
           role: 'user',
           content: [
             { type: 'text', text: "Parse the document."},
-            { type: 'file', data: fileBuffer, mimeType: mimeType },
+            { type: 'file', data: fileBuffer, mediaType: mimeType },
           ],
         },
       ],
