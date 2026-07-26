@@ -51,7 +51,7 @@
     "input-otp": "1.4.1",
     "lucide-react": "^0.454.0",
     "mongodb": "^6.13.1",
-    "mongoose": "^8.10.1",
+    "mongoose": "^8.24.1",
     "motion": "^12.4.7",
     "next": "^15.5.18",
     "next-themes": "^0.4.4",
@@ -75,8 +75,12 @@
     "@types/node": "^22",
     "@types/react": "^18",
     "@types/react-dom": "^18",
-    "postcss": "^8",
+    "postcss": "^8.5.18",
     "tailwindcss": "^3.4.17",
     "typescript": "^5"
+  },
+  "overrides": {
+    "brace-expansion": "5.0.8",
+    "sharp": "0.35.0"
   }
 }
